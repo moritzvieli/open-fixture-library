@@ -8,7 +8,7 @@ import SwitchingChannel from '../../lib/model/SwitchingChannel.js';
 import ddf3FunctionGroups from './ddf3-function-groups.js';
 import ddf3Functions from './ddf3-functions.js';
 
-export const version = `0.1.1`;
+export const version = `0.1.2`;
 
 /**
  * @param {Fixture[]} fixtures An array of Fixture objects.
@@ -214,9 +214,7 @@ function addFunctions(xml, mode) {
  * @returns {ChannelsPerPixel} Each pixel key pointing to its unwrapped matrix channels. null points to all non-matrix channels.
  */
 function getChannelsPerPixel(mode) {
-  const channelsPerPixel = new Map();
-
-  channelsPerPixel.set(null, []);
+  const channelsPerPixel = new Map([[null, []]]);
 
   const matrix = mode.fixture.matrix;
   if (matrix !== null) {

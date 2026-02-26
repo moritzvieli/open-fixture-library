@@ -83,14 +83,11 @@ export default {
 
         const typePerShutterEffect = {
           Strobe: capability.randomTiming ? `random` : `linear`,
-          Pulse: `pulse`,
           RampUp: `ramp up`,
           RampDown: `ramp down`,
           RampUpDown: `ramp up/down`,
-          Lightning: `lightning`,
-          Spikes: `spikes`,
         };
-        return typePerShutterEffect[capability.shutterEffect];
+        return typePerShutterEffect[capability.shutterEffect] ?? capability.shutterEffect.toLowerCase();
       }
     },
   },
@@ -804,9 +801,9 @@ export default {
 
 /**
  * @typedef {object} DmxControlCapability
- * @property {Capability} capObject
- * @property {number} startValue
- * @property {number} endValue
+ * @property {Capability} capObject The OFL capability object.
+ * @property {number} startValue The capability's start value in the allowed unit.
+ * @property {number} endValue The capability's end value in the allowed unit.
  */
 
 /**
@@ -866,7 +863,7 @@ function getSingleUnitCapabilities(capabilities, property, allowedUnit, zeroPerc
  * This function already handles swapping DMX start/end if the given start/end value is inverted (i.e. decreasing).
  * @param {Capability} capability The capability to use as data source.
  * @param {number|null} startValue The start value of an start/end entity, e.g. speedStart. Unit can be freely chosen. Omit if minval/maxval should not be added.
- * @param {*|null} endValue The end value of an start/end entity, e.g. speedEnd. Unit can be freely chosen. Omit if minval/maxval should not be added.
+ * @param {number|null} endValue The end value of an start/end entity, e.g. speedEnd. Unit can be freely chosen. Omit if minval/maxval should not be added.
  * @returns {XMLElement} A <step> or <range> with mindmx, maxdmx and, optionally, minval and maxval attributes.
  */
 function getBaseXmlCapability(capability, startValue = null, endValue = null) {
