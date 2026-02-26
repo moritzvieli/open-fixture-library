@@ -336,7 +336,7 @@ Then, either use the resolved channel keys directly in a mode's channel list, or
     "Green Inner ring", "Green Middle ring", "Green Outer ring",
     "Blue Inner ring", "Blue Middle ring", "Blue Outer ring"
   ]
-  ``
+  ```
 
 ### Wheels
 
