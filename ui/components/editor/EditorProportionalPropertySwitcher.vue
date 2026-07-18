@@ -190,7 +190,6 @@ import {
   schemaDefinitions,
   unitsSchema,
 } from '../../../lib/schema-properties.js';
-
 import PropertyInputEntity from '../PropertyInputEntity.vue';
 import PropertyInputNumber from '../PropertyInputNumber.vue';
 import PropertyInputText from '../PropertyInputText.vue';
@@ -209,7 +208,7 @@ export default {
     formstate: objectProp().optional,
   },
   data() {
-    const slotNumberUnit = entitiesSchema.slotNumber.$ref.replace(`#/units/`, ``);
+    const slotNumberUnit = entitiesSchema.slotNumber.$ref.replace('#/units/', '');
 
     return {
       schemaDefinitions,
@@ -220,18 +219,18 @@ export default {
     entity() {
       const capabilitySchema = capabilityTypes[this.capability.type];
       if (!capabilitySchema) {
-        return ``;
+        return '';
       }
 
       const propertySchema = capabilitySchema.properties[this.propertyName];
       if (!propertySchema) {
-        return ``;
+        return '';
       }
 
-      return (propertySchema.$ref || ``).replace(`definitions.json#/entities/`, ``);
+      return (propertySchema.$ref || '').replace('definitions.json#/entities/', '');
     },
     entitySchema() {
-      if (this.entity === ``) {
+      if (this.entity === '') {
         return null;
       }
 
@@ -264,7 +263,7 @@ export default {
     hasStartEnd: {
       get() {
         if (this.propertyDataStepped === null && this.propertyDataStart === null) {
-          throw new Error(`Stepped and start value are both null. At least one of them should have a value, e.g. an empty string.`);
+          throw new Error('Stepped and start value are both null. At least one of them should have a value, e.g. an empty string.');
         }
 
         return this.propertyDataStepped === null;
@@ -291,7 +290,7 @@ export default {
         return this.capability.typeData[this.propertyName];
       },
       set(newData) {
-        this.capability.typeData[this.propertyName] = newData === null ? `` : newData;
+        this.capability.typeData[this.propertyName] = newData === null ? '' : newData;
       },
     },
     slotNumberStart: {
@@ -299,7 +298,7 @@ export default {
         return this.capability.typeData[`${this.propertyName}Start`];
       },
       set(newData) {
-        this.capability.typeData[`${this.propertyName}Start`] = newData === null ? `` : newData;
+        this.capability.typeData[`${this.propertyName}Start`] = newData === null ? '' : newData;
       },
     },
     slotNumberEnd: {
@@ -307,20 +306,26 @@ export default {
         return this.capability.typeData[`${this.propertyName}End`];
       },
       set(newData) {
-        this.capability.typeData[`${this.propertyName}End`] = newData === null ? `` : newData;
+        this.capability.typeData[`${this.propertyName}End`] = newData === null ? '' : newData;
       },
     },
 
     swapButtonTabIndex() {
-      return (this.propertyDataStart === this.propertyDataEnd ||
-        this.propertyDataStart === `` ||
-        this.propertyDataEnd === ``) ? `-1` : null;
+      return (
+        (
+          this.propertyDataStart === this.propertyDataEnd
+          || this.propertyDataStart === ''
+          || this.propertyDataEnd === ''
+        )
+          ? '-1'
+          : null
+      );
     },
   },
   methods: {
     /** @public */
     focus() {
-      for (const field of [`steppedField`, `startField`, `endField`]) {
+      for (const field of ['steppedField', 'startField', 'endField']) {
         if (this.$refs[field]) {
           this.$refs[field].focus();
           return;
@@ -331,7 +336,7 @@ export default {
       await this.$nextTick();
 
       if (this.hasStartEnd) {
-        const focusField = this.propertyDataStart === `` ? this.$refs.startField : this.$refs.endField;
+        const focusField = this.propertyDataStart === '' ? this.$refs.startField : this.$refs.endField;
         focusField.focus();
       }
     },
@@ -344,7 +349,9 @@ export default {
       }
     },
     swapStartEnd() {
-      [this.propertyDataStart, this.propertyDataEnd] = [this.propertyDataEnd, this.propertyDataStart];
+      const start = this.propertyDataStart;
+      this.propertyDataStart = this.propertyDataEnd;
+      this.propertyDataEnd = start;
     },
   },
 };

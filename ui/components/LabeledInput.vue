@@ -110,32 +110,33 @@ export default {
       }
 
       const subFieldNames = Object.keys(this.formstate).filter(
-        subFieldName => subFieldName.startsWith(this.name),
+        (subFieldName) => subFieldName.startsWith(this.name),
       );
 
       for (const subFieldName of subFieldNames) {
-        if (this.formstate.$error[subFieldName]) {
-          const fieldState = this.formstate[subFieldName];
+        if (!this.formstate.$error[subFieldName]) {
+          continue;
+        }
 
-          if (fieldState.$touched || fieldState.$submitted) {
-            return fieldState;
-          }
+        const fieldState = this.formstate[subFieldName];
+
+        if (fieldState.$touched || fieldState.$submitted) {
+          return fieldState;
         }
       }
 
       return {};
     },
     fieldErrors() {
-      if (!(`$valid` in this.fieldState) || this.fieldState.$valid) {
+      if (!('$valid' in this.fieldState) || this.fieldState.$valid) {
         return {};
       }
 
       return this.fieldState.$error;
     },
     isSelectField() {
-      return this.name === `manufacturerKey` || this.name === `plugin` || /^capability.*?-(?:type|shutterEffect|color|effectPreset|fogType)$/.test(this.name);
+      return this.name === 'manufacturerKey' || this.name === 'plugin' || /^capability.*?-(?:type|shutterEffect|color|effectPreset|fogType)$/.test(this.name);
     },
   },
 };
 </script>
-
